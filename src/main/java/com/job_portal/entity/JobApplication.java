@@ -22,7 +22,7 @@ public class JobApplication {
 
   
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
+    @Column(columnDefinition = "BYTEA")
     private byte[] resume;
 
     @Column(name = "resume_file_name") // <- explicitly map to DB column
