@@ -12,7 +12,7 @@ public class Job {
 
     private String title;
     @Column
-    @Lob 
+    
     private String description;
     private String location;
     private String salary;
