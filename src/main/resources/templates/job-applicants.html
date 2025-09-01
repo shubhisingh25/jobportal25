@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Applicants | TalentHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2c3e50;
+            --secondary: #f8f9fa;
+            --accent: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #17a2b8;
+            --light-text: #6c757d;
+            --card-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        body { 
+            background-color: #f9fbfd; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar-brand { 
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2.5rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-badge { 
+            font-size: 0.75rem; 
+            padding: 0.4rem 0.75rem; 
+            border-radius: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        .table thead th { 
+            background-color: var(--primary-dark); 
+            color: white;
+            font-weight: 600;
+            padding: 1rem 0.75rem;
+            border: none;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .table tbody td {
+            padding: 1.2rem 0.75rem;
+            vertical-align: middle;
+            border-color: #edf2f7;
+        }
+        
+        .table tbody tr {
+            transition: var(--transition);
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+        }
+        
+        .btn-sm { 
+            padding: 0.5rem 0.9rem; 
+            font-size: 0.8rem; 
+            border-radius: 6px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .applicant-name {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .filter-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .form-select {
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+        
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .action-btn {
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .resume-btn {
+            background-color: rgba(52, 152, 219, 0.1);
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            color: var(--primary);
+        }
+        
+        .resume-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .pagination {
+            margin-top: 2rem;
+        }
+        
+        .page-item .page-link {
+            border-radius: 6px;
+            margin: 0 3px;
+            border: none;
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+        
+        .page-item.active .page-link {
+            background-color: var(--primary);
+        }
+        
+        .applicant-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-right: 12px;
+        }
+        
+        .applicant-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .table-responsive {
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            
+            .filter-options {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-people-fill me-2"></i>TalentHub Recruiter</a>
+            <a th:href="@{/jobs/list}" class="btn btn-outline-light btn-sm ms-auto">
+                <i class="bi bi-briefcase me-1"></i>View Jobs
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container text-center">
+            <h1 class="h3 fw-bold">Applicant Management</h1>
+            <p class="mb-0">Review and manage job applications</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    
+        
+        <!-- Applicants Table -->
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Job Seeker</th>
+                                <th>Status</th>
+                                <th>Resume</th>
+                                <th>Update Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="app : ${applications}">
+                                <td>
+                                    <div class="applicant-info">
+                                        <div class="applicant-avatar" th:text="${app.jobSeeker.name.substring(0,1)}"></div>
+                                        <div class="applicant-name" th:text="${app.jobSeeker.name}"></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span th:if="${app.status == 'ACCEPTED'}" class="badge bg-success status-badge"><i class="bi bi-check-circle me-1"></i>ACCEPTED</span>
+                                    <span th:if="${app.status == 'REJECTED'}" class="badge bg-danger status-badge"><i class="bi bi-x-circle me-1"></i>REJECTED</span>
+                                    <span th:if="${app.status == 'CONTACTED'}" class="badge bg-info status-badge"><i class="bi bi-chat me-1"></i>CONTACTED</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/applications/download-resume/{appId}(appId=${app.id})}" class="btn resume-btn btn-sm action-btn">
+                                        <i class="bi bi-download me-1"></i>Resume
+                                    </a>
+                                </td>
+                                <td>
+                                    <form th:action="@{/applications/update-status/{id}(id=${app.id})}" method="post" class="d-flex">
+                                        <select name="status" class="form-select form-select-sm me-2">
+                                            <option value="ACCEPTED">ACCEPTED</option>
+                                            <option value="REJECTED">REJECTED</option>
+                                            <option value="CONTACTED">CONTACTED</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary btn-sm action-btn">Update</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" class="d-flex justify-content-center mt-3">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple animation for page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    row.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>

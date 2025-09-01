@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | CareerHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2c3e50;
+            --secondary: #f8f9fa;
+            --accent: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #17a2b8;
+            --light-text: #6c757d;
+            --card-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f9fbfd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2.5rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .job-title {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .company-name {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .filter-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .form-select {
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+        
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .action-btn {
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .table thead th {
+            background-color: var(--primary-dark);
+            color: white;
+            font-weight: 600;
+            padding: 1rem 0.75rem;
+            border: none;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .table tbody td {
+            padding: 1.2rem 0.75rem;
+            vertical-align: middle;
+            border-color: #edf2f7;
+        }
+        
+        .table tbody tr {
+            transition: var(--transition);
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+        }
+        
+        .application-date {
+            color: var(--light-text);
+            font-size: 0.85rem;
+        }
+        
+        .job-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-right: 12px;
+        }
+        
+        .job-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .table-responsive {
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            
+            .filter-options {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-briefcase me-2"></i>CareerHub
+            </a>
+            <div class="d-flex">
+                <a th:href="@{/jobs/list}" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-search me-1"></i>Browse Jobs
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container text-center">
+            <h1 class="h3 fw-bold">My Job Applications</h1>
+            <p class="mb-0">Track the status of all your job applications in one place</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+   
+        
+        <!-- Filter Bar -->
+       
+        
+        <!-- Applications Table -->
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Job Title</th>
+                                <th>Status</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="app : ${applications}">
+                                <td>
+                                    <div class="job-info">
+                                        <div class="job-logo" th:text="${app.job.title.substring(0,1)}"></div>
+                                        <div>
+                                            <div class="job-title" th:text="${app.job.title}"></div>
+                                           
+                                        </div>
+                                    </div>
+                                </td>
+                                
+                               
+                                <td>
+                                    <span th:if="${app.status == 'ACCEPTED'}" class="badge bg-success status-badge">
+                                        <i class="bi bi-check-circle me-1"></i>Accepted
+                                    </span>
+                                    <span th:if="${app.status == 'REJECTED'}" class="badge bg-danger status-badge">
+                                        <i class="bi bi-x-circle me-1"></i>Rejected
+                                    </span>
+                                    <span th:if="${app.status == 'PENDING'}" class="badge bg-warning status-badge">
+                                        <i class="bi bi-clock me-1"></i>Pending
+                                    </span>
+                                    <span th:if="${app.status == 'CONTACTED'}" class="badge bg-info status-badge">
+                                        <i class="bi bi-envelope me-1"></i>Contacted
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination and Info -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div>
+                <p class="text-muted mb-0">Showing <strong th:text="${applications.size()}">3</strong> applications</p>
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination mb-0">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple animation for page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    row.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
