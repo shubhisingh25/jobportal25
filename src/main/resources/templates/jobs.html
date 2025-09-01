@@ -284,10 +284,12 @@
                                 <td>
                                     <div sec:authorize="hasRole('JOBSEEKER')" class="mb-2">
                                         <small class="text-danger d-block mb-1"><i class="bi bi-exclamation-circle"></i> Resume must have Contact Info</small>
-                                        <form th:action="@{/applications/apply/{id}(id=${job.id})}" method="post" enctype="multipart/form-data" class="d-flex">
-                                            <input type="file" name="resume" class="form-control form-control-sm me-1" required>
-                                            <button type="submit" class="btn btn-success btn-sm action-btn">Apply</button>
-                                        </form>
+										<form th:action="@{/applications/apply/{id}(id=${job.id})}" method="post" class="d-flex">
+										    <input type="url" name="resumeLink" class="form-control form-control-sm me-1"
+										           placeholder="Paste public resume link (Google Drive, Dropbox, etc.)" required>
+										    <button type="submit" class="btn btn-success btn-sm action-btn">Apply</button>
+										</form>
+
                                     </div>
                                     
                                     <div sec:authorize="hasRole('RECRUITER')" class="btn-group-vertical">
