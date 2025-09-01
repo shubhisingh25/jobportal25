@@ -20,25 +20,20 @@ public class JobApplication {
 
     private String status = "APPLIED";
 
-  
-    @Lob
-    @Column(columnDefinition = "BYTEA")
-    private byte[] resume;
-
-    @Column(name = "resume_file_name") // <- explicitly map to DB column
-    private String resumeFileName;
+    // Instead of storing file in DB
+    @Column(name = "resume_link")
+    private String resumeLink;
 
     // Default constructor
     public JobApplication() {}
 
-    // Parameterized constructor
-    public JobApplication(Long id, Job job, User jobSeeker, String status, byte[] resume, String resumeFileName) {
+    // Constructor with resumeLink
+    public JobApplication(Long id, Job job, User jobSeeker, String status, String resumeLink) {
         this.id = id;
         this.job = job;
         this.jobSeeker = jobSeeker;
         this.status = status;
-        this.resume = resume;
-        this.resumeFileName = resumeFileName;
+        this.resumeLink = resumeLink;
     }
 
     // Getters and Setters
@@ -54,9 +49,6 @@ public class JobApplication {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public byte[] getResume() { return resume; }
-    public void setResume(byte[] resume) { this.resume = resume; }
-
-    public String getResumeFileName() { return resumeFileName; }
-    public void setResumeFileName(String resumeFileName) { this.resumeFileName = resumeFileName; }
+    public String getResumeLink() { return resumeLink; }
+    public void setResumeLink(String resumeLink) { this.resumeLink = resumeLink; }
 }
