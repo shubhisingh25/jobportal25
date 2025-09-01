@@ -21,7 +21,8 @@ public class JobApplication {
     private String status = "APPLIED";
 
   
-    @Column(name = "resume")
+    @Lob
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte[] resume;
 
     @Column(name = "resume_file_name") // <- explicitly map to DB column
