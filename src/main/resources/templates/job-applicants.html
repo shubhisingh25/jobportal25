@@ -253,11 +253,13 @@
                                     <span th:if="${app.status == 'REJECTED'}" class="badge bg-danger status-badge"><i class="bi bi-x-circle me-1"></i>REJECTED</span>
                                     <span th:if="${app.status == 'CONTACTED'}" class="badge bg-info status-badge"><i class="bi bi-chat me-1"></i>CONTACTED</span>
                                 </td>
-                                <td>
-                                    <a th:href="@{/applications/download-resume/{appId}(appId=${app.id})}" class="btn resume-btn btn-sm action-btn">
-                                        <i class="bi bi-download me-1"></i>Resume
-                                    </a>
-                                </td>
+								<td>
+								    <a th:href="${app.resumeLink}" target="_blank" 
+								       class="btn resume-btn btn-sm action-btn">
+								        <i class="bi bi-link-45deg me-1"></i> View Resume
+								    </a>
+								</td>
+
                                 <td>
                                     <form th:action="@{/applications/update-status/{id}(id=${app.id})}" method="post" class="d-flex">
                                         <select name="status" class="form-select form-select-sm me-2">
