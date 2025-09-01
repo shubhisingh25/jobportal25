@@ -83,7 +83,9 @@ public class ApplicationController {
     }
     
     @PostMapping("/apply/{jobId}")
-    public String applyJobWithResume(@PathVariable Long jobId, @RequestParam("resume") MultipartFile resumeFile, Principal principal) throws IOException {
+    public String applyJobWithResumeLink(@PathVariable Long jobId, 
+                                         @RequestParam("resumeLink") String resumeLink, 
+                                         Principal principal) {
         User seeker = userService.findByEmail(principal.getName());
         Job job = jobService.findById(jobId);
 
@@ -91,37 +93,34 @@ public class ApplicationController {
             JobApplication app = new JobApplication();
             app.setJob(job);
             app.setJobSeeker(seeker);
-            if (!resumeFile.isEmpty()) {
-                app.setResume(resumeFile.getBytes());
-                app.setResumeFileName(resumeFile.getOriginalFilename());
-            }
+            app.setResumeLink(resumeLink); // save URL instead of file
             appService.apply(app);
         }
         return "redirect:/applications/my-applications";
     }
 
     // Download resume (for recruiters)
-@GetMapping("/download-resume/{appId}")
-public ResponseEntity<byte[]> downloadResume(@PathVariable Long appId) {
-    JobApplication app = appService.findById(appId);
-    
-    if (app == null || app.getResume() == null) {
-        return ResponseEntity.notFound().build();
-    }
-
-    // Try to guess file type (default PDF if null)
-    String fileName = app.getResumeFileName() != null ? app.getResumeFileName() : "resume.pdf";
-    MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
-    if (fileName.endsWith(".pdf")) {
-        mediaType = MediaType.APPLICATION_PDF;
-    } else if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
-        mediaType = MediaType.valueOf("application/msword");
-    }
-
-    return ResponseEntity.ok()
-            .contentType(mediaType)
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-            .body(app.getResume());
-}
+//    @GetMapping("/download-resume/{appId}")
+//    public ResponseEntity<byte[]> downloadResume(@PathVariable Long appId) {
+//        JobApplication app = appService.findById(appId);
+//        
+//        if (app == null || app.getResume() == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        // Try to guess file type (default PDF if null)
+//        String fileName = app.getResumeFileName() != null ? app.getResumeFileName() : "resume.pdf";
+//        MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
+//        if (fileName.endsWith(".pdf")) {
+//            mediaType = MediaType.APPLICATION_PDF;
+//        } else if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
+//            mediaType = MediaType.valueOf("application/msword");
+//        }
+//
+//        return ResponseEntity.ok()
+//                .contentType(mediaType)
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+//                .body(app.getResume());
+//    }
 
 }
